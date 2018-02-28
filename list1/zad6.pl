@@ -1,5 +1,5 @@
-is_prime(2) :- true,!.
-is_prime(X) :- X < 2, !,fail.
+is_prime(2) .
+
 is_prime(X) :- X > 2,
                         for(2,ceiling(sqrt(X)),X).
 for(BEG, END, X) :- BEG > END,!.
