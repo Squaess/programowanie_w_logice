@@ -1,3 +1,5 @@
-srodkowy(X).
+srodkowy([X], X).
 
-srodkowy( [S], X)  :- srodkowy(X).
+% Obzcinamy pierwszy i ostatni element
+srodkowy(L, X)  :- append([_|L1], [_], L),
+                    srodkowy(L1, X).
