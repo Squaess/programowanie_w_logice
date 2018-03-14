@@ -12,4 +12,4 @@ sciezka(X, Y, _) :- arc(X, Y).
 sciezka(X, Y, O) :-
        arc(X,Z),
        \+member(Z, O),
-       sciezka(Z,Y, [X|O]).
+       sciezka(Z,Y, [Z|O]).
