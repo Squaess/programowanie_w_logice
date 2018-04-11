@@ -60,25 +60,24 @@ makeToken(L, X, L2) :-
 								key(X),
 								append(L, [key(X)], L2)
 					);
-		      (
+		      		(
 								separator(X), append( L, [sep(X)], L2)
 					);
-			    (
+			    	(
 									atom_number(X, N),
 									integer(N),
 									N >= 0,
 									append(L, [int(X)], L2)
-				 );
-				 (
+				 	);
+				 	(
 									atom_chars(X, Chars),
 									check_variable(Chars),
 									append(L, [id(X)], L2)
-
-				 ).
+				   ).
 
 
 % Dodaj do L odpowiedni klucz/separator/.... i oddaj w L2
-
+/*
 addKey(L, X, L2) :-
 							Y = key(X),
 							append(L, [Y], L2).
@@ -91,7 +90,7 @@ addInt(L, X, L2) :-
 addId(L, X, L2) :-
 							Y = id(X),
 							append(L, [Y], L2).
-
+*/
 check_variable(List) :-
 							\+ (
 												member(X, List),
