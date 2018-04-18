@@ -18,12 +18,15 @@ czytaj_dalej(C1, X,  X2, Y)  :-
 czytaj_dalej(C1, L,  X,  Y) :-
 						czytaj_slowo(C1, C2, '', H, Y),
 						!,
-						addToken(L, H, L2), %musimy jeszcze sprawdzic czy nie ma srednika na koncu
+						%check_word(L, H, L2),
+						%addToken(L, H, L2), 		% musimy jeszcze sprawdzic czy nie ma
+																	% srednika na koncu oraz czy slowo nie ma separatorów bez spacji
 						czytaj_dalej(C2, L2, X, Y).
 
 
 czytaj_slowo(end_of_file, end_of_file, N, N, _) :-
 						!.
+
 
 czytaj_slowo(C, C, N, N, _) :-
 						biały(C),
@@ -38,6 +41,29 @@ biały(' ').
 biały('\t').
 biały('\n').
 
+check_word(L, X, L2) :-
+						writeln(X),
+						atom_chars(X, Atoms),
+						select(SEP, Atoms, Atoms2),
+						separator(SEP),
+						append(L3, L4, Atoms2),
+						spelnia(L3),
+						!,
+						atom_chars(T, L4),
+						check_word(L, T, L5),
+						append(L3, L5, L2).
+
+spelnia(L1) :-
+				atom_chars(X, L1),
+				(
+					key(X);
+					(
+							atom_number(X, N),
+							integer(N),
+							N >= 0
+					);
+					check_variable(L1)
+				).
 
 addToken(L, X, L2) :-
 						!,

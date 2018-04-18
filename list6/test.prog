@@ -1,1 +1,1 @@
-N := 0;
+read N;U:=1;R:=1;whileR<NdoV:=U;S:=1;whileS=<RdoU:=U+V;S:=S+1;od;R:=R+1;od;writeU;

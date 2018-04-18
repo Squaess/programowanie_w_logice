@@ -1,4 +1,4 @@
-:-[interpreter].
+:-[interpret].
 :-[zad1].
 
 wykonaj(NazwaPliku) :-
