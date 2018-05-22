@@ -1,23 +1,57 @@
-[zad1].
-[zad2].
-%
-% merge_sort([EL1], EL1).
-%
-%
-% merge_sort(IN, OUT) :-
-%     split(IN, L1, L2),
-%     writeln(L1),
-%     writeln(L2),
-%     merge_sort(L1, OUT1),
-%     merge_sort(L2, OUT2),
-%     mergelist(OUT1, OUT2, OUT).
 
-    mergesort([],[]).
-    mergesort([X], [X]).
-            %freeze(X, true).
+filozofowie:-
+	thread_create(życie(1),ID1,[]),
+	thread_create(życie(2),ID2,[]),
+	thread_create(życie(3),ID3,[]),
+	thread_create(życie(4),ID4,[]),
+	thread_create(życie(5),ID5,[]),
+	thread_join(ID1,_),
+	thread_join(ID2,_),
+	thread_join(ID3,_),
+	thread_join(ID4,_),
+	thread_join(ID5,_).
 
-    mergesort(IN, OUT):-
-            freeze(IN, (split(IN, Left, Right),
-    	    mergesort(Left, Sorted1),
-    		mergesort(Right, Sorted2),
-            merge1(Sorted1, Sorted2, OUT))),!.
+życie(ID):-
+	myśli(ID),
+	(   ID<5->
+        Left is ID, Right is ID+1;
+        Left is 5, Right is 1
+  ),
+	napisz(ID,'chce prawy widelec'),
+	podnieś_widelec(ID,Right,p),
+	napisz(ID,'chce lewy widelec'),
+	podnieś_widelec(ID,Left,l),
+	je(ID),
+	odkłada_widelec(ID,Right,p),
+	odkłada_widelec(ID,Left,l),
+	życie(ID).
+
+myśli(ID):-
+	napisz(ID,"myśli"),
+	sleep(ID).
+
+podnieś_widelec(ID,W,K):-
+	atom_concat('widelec',W,M),
+	mutex_lock(M),
+	(   K=p->
+        napisz(ID,'podniósł prawy widelec');
+        napisz(ID,'podniósł lewy widelec')
+  ).
+
+je(ID):-
+	napisz(ID,"je"),
+	sleep(ID).
+
+odkłada_widelec(ID,W,K):-
+	atom_concat('widelec',W,M),
+	mutex_unlock(M),
+	(   K=p->
+        napisz(ID,'odkłada prawy widelec');
+        napisz(ID,'odkłada lewy widelec')
+  ).
+
+napisz(ID,STRING):-
+	mutex_lock(pisanie),
+	format('[~w] ~w~n',[ID,STRING]),
+	mutex_unlock(pisanie),
+  sleep(1).

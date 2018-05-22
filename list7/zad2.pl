@@ -1,24 +1,21 @@
-% split(L, L1, L2) :-
-%     length(L, N),
-%     split(L, L1, L2, N).
-%
-% split([],[],[], 0).
-%
-% split([X|L], [X|L1], L2, LEN) :-
-%         0 is LEN mod 2,
-%         !,
-%         LEN2 is LEN -1,
-%         split(L,L1,L2, LEN2).
-%
-% split([X|L], L1, [X|L2], LEN) :-
-%         LEN2 is LEN -1,
-%         split(L,L1, L2, LEN2).
+:-consult('zad1.pl').
 
-split([], [], []).
-split([X], [X], []).% freeze(X, true),!.
-split([X, Y | IN], [X | OUT1], [Y | OUT2]) :- freeze(X, freeze(Y, (split(IN, OUT1, OUT2), !))).
+split(IN,OUT1,OUT2):-split(IN,OUT1,OUT2,1).
+split(IN,OUT1,OUT2,1):-
+	freeze(IN,(
+		  IN=[]->OUT1=[],OUT2=[];
+		  IN=[H|T],OUT1=[H|NOUT1],split(T,NOUT1,OUT2,2))).
+split(IN,OUT1,OUT2,2):-
+	freeze(IN,(
+		   IN=[]->OUT1=[],OUT2=[];
+		   IN=[H|T],OUT2=[H|NOUT2],split(T,OUT1,NOUT2,2))).
 
-split(X, OUT1, OUT2) :-
-        freeze( X, (
-        
-        )).
+merge_sort(In,Out):-freeze(In, merge_sort2(In,Out)).
+
+merge_sort2([],[]).
+merge_sort2([H|T],Out):-freeze(T,
+			       (T=[])->(Out=[H]);
+			       (split([H|T],Out1,Out2),
+				merge_sort(Out1,Out11),
+				merge_sort(Out2,Out22),
+merge(Out11,Out22,Out))).

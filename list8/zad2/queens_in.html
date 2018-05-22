@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+	lang="pl"
+	xmlns:pwp="http://www.cs.otago.ac.nz/staffpriv/ok/pwp.pl"
+	pwp:ask="ensure_loaded('queens'), size(N)">
+<head>
+	<meta charset="utf-8" />
+	<title>Quenns</title>
+	<meta name="generator" content="BBEdit 11.5" />
+</head>
+<body pwp:ask="once(queens(N, List))">
+	<h1>Queens problem</h1>
+	<h2>
+		Solution for N = <span pwp:use = "N" pwp:tag = '-'/>
+	</h2>
+
+	<table border="0" cellpadding="0" cellspacing="0">
+		<tr pwp:ask="member(X, List)">			
+			<td pwp:ask="between(1, N, Y)">
+				<p pwp:ask = "X = Y">
+					<img src="pic/queen.png"/>
+				</p>
+				<p pwp:ask= "\+ (X = Y)">
+					<img src="pic/empty.png"/>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+	<p pwp:ask="getenv('SHELL', Shell)">
+		The default shell is <span pwp:tag="-" pwp:use="Shell"/>.
+		<img src="pic/queen.png"/>
+	</p>
+
+  <p pwp:ask="\+getenv('SHELL',_)">
+		There is no default shell.
+		<img src="pic/empty.png"/>
+	</p>
+
+</body>
+</html>
