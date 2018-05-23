@@ -39,16 +39,9 @@ task4(PLIK, HREF) :-
 
 moje(PLIK, ARGS) :-
 		task4(PLIK, HREF),
-		parse_url(HREF, [A, B, C]),
-		B =.. [_ | [ARGS]],
-		C =.. [ _| [PATH]],
-		writeln(HREF),
-		writeln(A),
-		writeln(B),
-		writeln(C),
-		writeln(' '),
-		PATH \= '/index.html',
-		PATH \= '/index.php'.
+		parse_url(HREF, localhost, L),
+		member(host(ARGS), L).
+
 
 moje0(PLIK, LIST) :-
 	setof(ARGS , moje(PLIK, ARGS), LIST).
